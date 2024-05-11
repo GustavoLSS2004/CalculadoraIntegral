@@ -1,18 +1,12 @@
-## Getting Started
+## Resumo              
+Alunos : Gregório de Albuquerque e Gustavo Luiz dos Santos Silva
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Essa calculadora faz parte da nota do 2ºG.Q onde devemos fazer uma calculadora de integral definida.
 
-## Folder Structure
+## Função:
+A calculadora deverá calcular uma integral  definida onde o usuário escolhe a função "F" e o "a" , "b" e o "c" para calular .
 
-The workspace contains two folders by default, where:
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
 
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
