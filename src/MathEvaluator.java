@@ -10,12 +10,22 @@ public class MathEvaluator {
 
         for (int i = 0; i < expression.length(); i++) {
             char c = expression.charAt(i);
-            if (Character.isDigit(c)) {
+            if (Character.isDigit(c) || (c == '-' && (i == 0 || expression.charAt(i - 1) == '('))) {
                 StringBuilder sb = new StringBuilder();
-                while (i < expression.length() && (Character.isDigit(expression.charAt(i)) || expression.charAt(i) == '.')) {
-                    sb.append(expression.charAt(i++));
+                // Trata números negativos
+                if (c == '-') {
+                    sb.append(c);
+                    i++;
+                    while (i < expression.length() && (Character.isDigit(expression.charAt(i)) || expression.charAt(i) == '.')) {
+                        sb.append(expression.charAt(i++));
+                    }
+                    i--; // Voltamos um passo porque o próximo caractere não é um dígito
+                } else { // Trata números positivos
+                    while (i < expression.length() && (Character.isDigit(expression.charAt(i)) || expression.charAt(i) == '.')) {
+                        sb.append(expression.charAt(i++));
+                    }
+                    i--; // Voltamos um passo porque o próximo caractere não é um dígito
                 }
-                i--;
                 numbers.push(Double.parseDouble(sb.toString()));
             } else if (c == '(') {
                 operators.push(c);
