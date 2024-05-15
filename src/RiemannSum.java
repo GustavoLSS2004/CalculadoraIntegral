@@ -7,7 +7,7 @@ public class RiemannSum {
         Scanner scanner = new Scanner(System.in);
 
         // Solicita a função polinomial ao usuário
-        System.out.println("Insira a função polinomial (use 'x' como variável):");
+        System.out.println("Insira a função (use 'x' como variável, por exemplo '(x^2) + sin(x)', 'cos(x)', 'ln(x)', 'x^2'):");
         System.out.print("F(x) = ");
         String functionString = scanner.nextLine();
 
