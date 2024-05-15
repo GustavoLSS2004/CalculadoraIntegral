@@ -12,20 +12,14 @@ public class MathEvaluator {
             char c = expression.charAt(i);
             if (Character.isDigit(c) || (c == '-' && (i == 0 || expression.charAt(i - 1) == '('))) {
                 StringBuilder sb = new StringBuilder();
-                // Trata números negativos
                 if (c == '-') {
                     sb.append(c);
                     i++;
-                    while (i < expression.length() && (Character.isDigit(expression.charAt(i)) || expression.charAt(i) == '.')) {
-                        sb.append(expression.charAt(i++));
-                    }
-                    i--; // Voltamos um passo porque o próximo caractere não é um dígito
-                } else { // Trata números positivos
-                    while (i < expression.length() && (Character.isDigit(expression.charAt(i)) || expression.charAt(i) == '.')) {
-                        sb.append(expression.charAt(i++));
-                    }
-                    i--; // Voltamos um passo porque o próximo caractere não é um dígito
                 }
+                while (i < expression.length() && (Character.isDigit(expression.charAt(i)) || expression.charAt(i) == '.')) {
+                    sb.append(expression.charAt(i++));
+                }
+                i--; // Voltamos um passo porque o próximo caractere não é um dígito
                 numbers.push(Double.parseDouble(sb.toString()));
             } else if (c == '(') {
                 operators.push(c);
@@ -34,11 +28,22 @@ public class MathEvaluator {
                     numbers.push(applyOperator(operators.pop(), numbers.pop(), numbers.pop()));
                 }
                 operators.pop();
-            } else if (c == '+' || c == '-' || c == '*' || c == '/') {
+            } else if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^') {
                 while (!operators.isEmpty() && precedence(c) <= precedence(operators.peek())) {
                     numbers.push(applyOperator(operators.pop(), numbers.pop(), numbers.pop()));
                 }
                 operators.push(c);
+            } else if (c == '^') {
+                // Verifica se é uma potência fracionária
+                if (expression.charAt(i + 1) == '(') {
+                    int start = i + 2;
+                    int end = expression.indexOf(')', start);
+                    double base = evaluate(expression.substring(start, end));
+                    i = end;
+                    numbers.push(base);
+                } else { // Trata como uma potência normal
+                    operators.push(c);
+                }
             }
         }
 
@@ -52,6 +57,7 @@ public class MathEvaluator {
     private int precedence(char operator) {
         if (operator == '+' || operator == '-') return 1;
         if (operator == '*' || operator == '/') return 2;
+        if (operator == '^') return 3;
         return 0;
     }
 
@@ -66,6 +72,8 @@ public class MathEvaluator {
             case '/':
                 if (b == 0) throw new ArithmeticException("Divisão por zero!");
                 return a / b;
+            case '^':
+                return Math.pow(a, b);
         }
         return 0;
     }
